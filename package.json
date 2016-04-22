@@ -1,0 +1,25 @@
+{
+  "name": "react-native-fit-image",
+  "version": "1.0.0",
+  "description": "Responsive image component to fit perfectly itself.",
+  "main": "FitImage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/originerd/react-native-fit-image.git"
+  },
+  "keywords": [
+    "React",
+    "Native",
+    "Image",
+    "Responsive"
+  ],
+  "author": "Jitae Kim <originerd@gmail.com> (http://originerd.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/originerd/react-native-fit-image/issues"
+  },
+  "homepage": "https://github.com/originerd/react-native-fit-image#readme"
+}
