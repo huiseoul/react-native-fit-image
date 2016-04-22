@@ -6,6 +6,8 @@ import React, {
 } from 'react-native';
 
 const propTypes = {
+  height: PropTypes.number,
+  width: PropTypes.number,
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
   source: PropTypes.object.isRequired,
@@ -16,19 +18,38 @@ class FitImage extends Component {
   constructor(props) {
     super(props);
 
-    const height = 0;
+    if(!props.height && !props.originalHeight) {
+      throw("Props error: at least one props must be " +
+            "present among height and originalHeight.");
+    }
+
+    if(!props.width && !props.originalWidth) {
+      throw("Props error: at least one props must be " +
+            "present among width and originalWidth.");
+    }
 
     this.state = {
-      height,
+      height: 0,
     };
   }
 
+  _getWidthObject() {
+    if(this.props.width) {
+      return { width: this.props.width };
+    }
+    return null;
+  }
+
   _getRatio(width) {
-    return width / this.props.originalWidth;
+    return this._getWidthObject() ? 1 : width / this.props.originalWidth;
   }
 
   _getHeight(width) {
-    return this.props.originalHeight * this._getRatio(width);
+    if(this.props.height) {
+      return this.props.height;
+    } else {
+      return this.props.originalHeight * this._getRatio(width);
+    }
   }
 
   _setHeight(event) {
@@ -50,7 +71,8 @@ class FitImage extends Component {
             flex: 1,
             height: this.state.height,
           },
-          this.props.style
+          this.props.style,
+          this._getWidthObject(),
         ]}
         onLayout={(event) => this._setHeight(event)}
       />
