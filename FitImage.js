@@ -18,14 +18,22 @@ class FitImage extends Component {
   constructor(props) {
     super(props);
 
-    if(!props.height && !props.originalHeight) {
-      throw("Props error: at least one props must be " +
-            "present among height and originalHeight.");
+    const size = [props.width, props.height];
+    const originalSize = [props.originalWidth, props.originalHeight];
+
+    if(size.filter((e) => { return e; }).length == 1) {
+      throw("Props error: size props must be present " +
+            "none or both of width and height.");
     }
 
-    if(!props.width && !props.originalWidth) {
-      throw("Props error: at least one props must be " +
-            "present among width and originalWidth.");
+    if(originalSize.filter((e) => { return e; }).length === 1) {
+      throw("Props error: originalSize props must be present " +
+            "none or both of originalWidth and originalHeight.");
+    }
+
+    if([...size, ...originalSize].filter((e) => { return e; }).length === 0) {
+      throw("Props error: at least one props must be present " +
+            "among (originalWidth, originalHeight) and (width, height).");
     }
 
     this.state = {
@@ -54,6 +62,7 @@ class FitImage extends Component {
 
   _setHeight(event) {
     var { width } = event.nativeEvent.layout;
+    console.log('width', width);
 
     const height = this._getHeight(width);
 
@@ -63,6 +72,8 @@ class FitImage extends Component {
   }
 
   render() {
+    console.log(this.state.height);
+
     return (
       <Image
         source={this.props.source}
