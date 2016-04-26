@@ -41,15 +41,16 @@ class FitImage extends Component {
     };
   }
 
-  _getWidthObject() {
+  _getStyle() {
     if(this.props.width) {
       return { width: this.props.width };
+    } else {
+      return { flex: 1 };
     }
-    return null;
   }
 
   _getRatio(width) {
-    return this._getWidthObject() ? 1 : width / this.props.originalWidth;
+    return width / this.props.originalWidth;
   }
 
   _getHeight(width) {
@@ -78,12 +79,9 @@ class FitImage extends Component {
       <Image
         source={this.props.source}
         style={[
-          {
-            flex: 1,
-            height: this.state.height,
-          },
+          { height: this.state.height },
           this.props.style,
-          this._getWidthObject(),
+          this._getStyle(),
         ]}
         onLayout={(event) => this._setHeight(event)}
       />
