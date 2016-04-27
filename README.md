@@ -24,7 +24,7 @@ var styles = StyleSheet.create({
   style={styles.fitImage}
 />
 
-// or draws image to specify size like Image component.
+// or draws image to specific size like Image component.
 <FitImage
   source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
   width={200}
