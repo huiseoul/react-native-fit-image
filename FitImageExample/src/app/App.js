@@ -1,33 +1,80 @@
 import React, {
   Component,
+  ScrollView,
   StyleSheet,
-  View
+  View,
 } from 'react-native';
 
 import FitImage from 'react-native-fit-image';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    flex: 1,
+    paddingTop: 20,
   },
-  fitImage: {
+  flex: {
+    flex: 1,
+  },
+  imageRounded: {
     borderRadius: 20,
-  }
+    marginTop: 20,
+  },
+  marginAndBorder: {
+    borderColor: 'red',
+    borderWidth: 2,
+    margin: 20,
+  },
+  twoColumnsContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
 });
 
 function App() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      { /* Style none */ }
       <FitImage
         source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
         originalWidth={400}
         originalHeight={400}
-        style={styles.fitImage}
       />
-    </View>
+
+      { /* Rounded */ }
+      <FitImage
+        source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+        originalWidth={400}
+        originalHeight={400}
+        style={styles.imageRounded}
+      />
+
+      { /* Two columns on row */ }
+      <View style={styles.twoColumnsContainer}>
+        <FitImage
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          originalWidth={400}
+          originalHeight={400}
+          style={styles.flex}
+        />
+        <FitImage
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          originalWidth={400}
+          originalHeight={400}
+          style={styles.flex}
+        />
+      </View>
+
+      { /* Margin and border */ }
+      <View style={styles.marginAndBorder}>
+        <FitImage
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          originalWidth={400}
+          originalHeight={400}
+          style={styles.flex}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
