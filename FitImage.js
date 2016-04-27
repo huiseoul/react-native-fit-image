@@ -20,19 +20,20 @@ class FitImage extends Component {
     const size = [props.width, props.height];
     const originalSize = [props.originalWidth, props.originalHeight];
 
-    if(size.filter((e) => { return e; }).length == 1) {
-      throw("Props error: size props must be present " +
-            "none or both of width and height.");
+    if (size.filter(e => e).length === 1) {
+      throw new Error('Props error: size props must be present ' +
+                      'none or both of width and height.');
     }
 
-    if(originalSize.filter((e) => { return e; }).length === 1) {
-      throw("Props error: originalSize props must be present " +
-            "none or both of originalWidth and originalHeight.");
+    if (originalSize.filter(e => e).length === 1) {
+      throw new Error('Props error: originalSize props must be present ' +
+                      'none or both of originalWidth and originalHeight.');
     }
 
-    if([...size, ...originalSize].filter((e) => { return e; }).length === 0) {
-      throw("Props error: at least one props must be present " +
-            "among (originalWidth, originalHeight) and (width, height).");
+    if ([...size, ...originalSize].filter(e => e).length === 0) {
+      throw new Error(
+        'Props error: at least one props must be present ' +
+        'among (originalWidth, originalHeight) and (width, height).');
     }
 
     this.state = {
@@ -41,11 +42,10 @@ class FitImage extends Component {
   }
 
   _getStyle() {
-    if(this.props.width) {
+    if (this.props.width) {
       return { width: this.props.width };
-    } else {
-      return { flex: 1 };
     }
+    return { flex: 1 };
   }
 
   _getRatio(width) {
@@ -53,17 +53,14 @@ class FitImage extends Component {
   }
 
   _getHeight(width) {
-    if(this.props.height) {
+    if (this.props.height) {
       return this.props.height;
-    } else {
-      return this.props.originalHeight * this._getRatio(width);
     }
+    return this.props.originalHeight * this._getRatio(width);
   }
 
   _setHeight(event) {
-    var { width } = event.nativeEvent.layout;
-    console.log('width', width);
-
+    const { width } = event.nativeEvent.layout;
     const height = this._getHeight(width);
 
     this.setState({
@@ -72,8 +69,6 @@ class FitImage extends Component {
   }
 
   render() {
-    console.log(this.state.height);
-
     return (
       <Image
         source={this.props.source}
