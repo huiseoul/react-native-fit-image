@@ -1,6 +1,5 @@
 import React, {
   Component,
-  Dimensions,
   Image,
   PropTypes,
 } from 'react-native';
