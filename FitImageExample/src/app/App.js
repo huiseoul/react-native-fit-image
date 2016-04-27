@@ -13,16 +13,21 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
   },
+  flex: {
+    flex: 1,
+  },
   imageRounded: {
     borderRadius: 20,
     marginTop: 20,
   },
+  marginAndBorder: {
+    borderColor: 'red',
+    borderWidth: 2,
+    margin: 20,
+  },
   twoColumnsContainer: {
     flexDirection: 'row',
     marginTop: 20,
-  },
-  flex: {
-    flex: 1,
   },
 });
 
@@ -52,6 +57,16 @@ function App() {
           originalHeight={400}
           style={styles.flex}
         />
+        <FitImage
+          source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+          originalWidth={400}
+          originalHeight={400}
+          style={styles.flex}
+        />
+      </View>
+
+      { /* Margin and border */ }
+      <View style={styles.marginAndBorder}>
         <FitImage
           source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
           originalWidth={400}
