@@ -36,4 +36,7 @@ var styles = StyleSheet.create({
 ## Example
 - See a [FitImageExample][1].
 
+![FitImageExample - Portrait](./FitImageExample/fit_image_example_portrait.gif)
+![FitImageExample - LandScape](./FitImageExample/fit_image_example_landscape.gif)
+
 [1]: https://github.com/huiseoul/react-native-fit-image/tree/master/FitImageExample
