@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 20,
   },
+  imageRounded: {
+    borderRadius: 20,
+    marginTop: 20,
+  },
 });
 
 function App() {
@@ -22,6 +26,14 @@ function App() {
         source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
         originalWidth={400}
         originalHeight={400}
+      />
+
+      { /* Rounded */ }
+      <FitImage
+        source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}
+        originalWidth={400}
+        originalHeight={400}
+        style={styles.imageRounded}
       />
     </ScrollView>
   );
