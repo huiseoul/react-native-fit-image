@@ -88,4 +88,6 @@ class FitImage extends Component {
   }
 }
 
+FitImage.propTypes = propTypes;
+
 export default FitImage;
