@@ -52,27 +52,27 @@ class FitImage extends Component {
     }
   }
 
-  _getStyle() {
+  getStyle() {
     if (this.props.width) {
       return { width: this.props.width };
     }
     return { flex: 1 };
   }
 
-  _getRatio(width) {
+  getRatio(width) {
     return width / (this.props.originalWidth || this.state.originalWidth);
   }
 
-  _getHeight(width) {
+  getHeight(width) {
     if (this.props.height) {
       return this.props.height;
     }
-    return (this.props.originalHeight || this.state.originalHeight) * this._getRatio(width);
+    return (this.props.originalHeight || this.state.originalHeight) * this.getRatio(width);
   }
 
-  _setHeight(event) {
+  setHeight(event) {
     const { width } = event.nativeEvent.layout;
-    const height = this._getHeight(width);
+    const height = this.getHeight(width);
 
     this.setState({
       height,
@@ -87,9 +87,9 @@ class FitImage extends Component {
         style={[
           { height: this.state.height },
           this.props.style,
-          this._getStyle(),
+          this.getStyle(),
         ]}
-        onLayout={(event) => this._setHeight(event)}
+        onLayout={(event) => this.setHeight(event)}
       />
     );
   }
