@@ -39,7 +39,7 @@ class FitImage extends Component {
   }
 
   componentDidMount() {
-    if(!this.props.originalWidth || !this.props.originalHeight) {
+    if (!this.props.originalWidth || !this.props.originalHeight) {
       Image.getSize(this.props.source.uri, (width, height) => {
         const newHeight = this.state.layoutWidth / width;
 
@@ -59,20 +59,28 @@ class FitImage extends Component {
     return { flex: 1 };
   }
 
-  getRatio(width) {
-    return width / (this.props.originalWidth || this.state.originalWidth);
+  getOriginalWidth() {
+    return this.props.originalWidth || this.state.originalWidth;
   }
 
-  getHeight(width) {
+  getOriginalHeight() {
+    return this.props.originalHeight || this.state.originalHeight;
+  }
+
+  getRatio() {
+    return this.state.layoutWidth / this.getOriginalWidth();
+  }
+
+  getHeight() {
     if (this.props.height) {
       return this.props.height;
     }
-    return (this.props.originalHeight || this.state.originalHeight) * this.getRatio(width);
+    return this.getOriginalHeight() * this.getRatio();
   }
 
-  setHeight(event) {
+  resize(event) {
     const { width } = event.nativeEvent.layout;
-    const height = this.getHeight(width);
+    const height = this.getHeight();
 
     this.setState({
       height,
@@ -89,7 +97,7 @@ class FitImage extends Component {
           this.props.style,
           this.getStyle(),
         ]}
-        onLayout={(event) => this.setHeight(event)}
+        onLayout={(event) => this.resize(event)}
       />
     );
   }
