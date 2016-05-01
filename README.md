@@ -17,6 +17,13 @@ var styles = StyleSheet.create({
 });
 
 // draws image to fit inherited space automatically, even when screen is rotated.
+// even you don't need to provide original size in v1.2.0
+<FitImage
+  source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
+  style={styles.fitImage}
+/>
+
+// draws image to fit inherited space automatically, even when screen is rotated.
 <FitImage
   source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
   originalWidth={400}

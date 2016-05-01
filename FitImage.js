@@ -30,41 +30,61 @@ class FitImage extends Component {
                       'none or both of originalWidth and originalHeight.');
     }
 
-    if ([...size, ...originalSize].filter(e => e).length === 0) {
-      throw new Error(
-        'Props error: at least one props must be present ' +
-        'among (originalWidth, originalHeight) and (width, height).');
-    }
-
     this.state = {
       height: 0,
+      layoutWidth: undefined,
+      originalWidth: undefined,
+      originalHeight: undefined,
     };
   }
 
-  _getStyle() {
+  componentDidMount() {
+    if (!this.props.originalWidth || !this.props.originalHeight) {
+      Image.getSize(this.props.source.uri, (width, height) => {
+        const newHeight = this.state.layoutWidth / width;
+
+        this.setState({
+          height: newHeight,
+          originalWidth: width,
+          originalHeight: height,
+        });
+      });
+    }
+  }
+
+  getStyle() {
     if (this.props.width) {
       return { width: this.props.width };
     }
     return { flex: 1 };
   }
 
-  _getRatio(width) {
-    return width / this.props.originalWidth;
+  getOriginalWidth() {
+    return this.props.originalWidth || this.state.originalWidth;
   }
 
-  _getHeight(width) {
+  getOriginalHeight() {
+    return this.props.originalHeight || this.state.originalHeight;
+  }
+
+  getRatio() {
+    return this.state.layoutWidth / this.getOriginalWidth();
+  }
+
+  getHeight() {
     if (this.props.height) {
       return this.props.height;
     }
-    return this.props.originalHeight * this._getRatio(width);
+    return this.getOriginalHeight() * this.getRatio();
   }
 
-  _setHeight(event) {
+  resize(event) {
     const { width } = event.nativeEvent.layout;
-    const height = this._getHeight(width);
+    const height = this.getHeight();
 
     this.setState({
       height,
+      layoutWidth: width,
     });
   }
 
@@ -75,9 +95,9 @@ class FitImage extends Component {
         style={[
           { height: this.state.height },
           this.props.style,
-          this._getStyle(),
+          this.getStyle(),
         ]}
-        onLayout={(event) => this._setHeight(event)}
+        onLayout={(event) => this.resize(event)}
       />
     );
   }
