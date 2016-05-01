@@ -30,15 +30,26 @@ class FitImage extends Component {
                       'none or both of originalWidth and originalHeight.');
     }
 
-    if ([...size, ...originalSize].filter(e => e).length === 0) {
-      throw new Error(
-        'Props error: at least one props must be present ' +
-        'among (originalWidth, originalHeight) and (width, height).');
-    }
-
     this.state = {
       height: 0,
+      layoutWidth: undefined,
+      originalWidth: undefined,
+      originalHeight: undefined,
     };
+  }
+
+  componentDidMount() {
+    if(!this.props.originalWidth || !this.props.originalHeight) {
+      Image.getSize(this.props.source.uri, (width, height) => {
+        const newHeight = this.state.layoutWidth / width;
+
+        this.setState({
+          height: newHeight,
+          originalWidth: width,
+          originalHeight: height,
+        });
+      });
+    }
   }
 
   _getStyle() {
@@ -49,14 +60,14 @@ class FitImage extends Component {
   }
 
   _getRatio(width) {
-    return width / this.props.originalWidth;
+    return width / (this.props.originalWidth || this.state.originalWidth);
   }
 
   _getHeight(width) {
     if (this.props.height) {
       return this.props.height;
     }
-    return this.props.originalHeight * this._getRatio(width);
+    return (this.props.originalHeight || this.state.originalHeight) * this._getRatio(width);
   }
 
   _setHeight(event) {
@@ -65,6 +76,7 @@ class FitImage extends Component {
 
     this.setState({
       height,
+      layoutWidth: width,
     });
   }
 
