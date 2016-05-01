@@ -67,20 +67,22 @@ class FitImage extends Component {
     return this.props.originalHeight || this.state.originalHeight;
   }
 
-  getRatio() {
-    return this.state.layoutWidth / this.getOriginalWidth();
+  getRatio(width) {
+    const layoutWidth = width || this.state.layoutWidth;
+
+    return layoutWidth / this.getOriginalWidth();
   }
 
-  getHeight() {
+  getHeight(layoutWidth) {
     if (this.props.height) {
       return this.props.height;
     }
-    return this.getOriginalHeight() * this.getRatio();
+    return this.getOriginalHeight() * this.getRatio(layoutWidth);
   }
 
   resize(event) {
     const { width } = event.nativeEvent.layout;
-    const height = this.getHeight();
+    const height = this.getHeight(width);
 
     this.setState({
       height,
