@@ -10,7 +10,7 @@ const propTypes = {
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
   source: PropTypes.object.isRequired,
-  style: PropTypes.number,
+  style: Image.propTypes.style,
 };
 
 class FitImage extends Component {
