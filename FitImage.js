@@ -1,8 +1,7 @@
-import React, {
-  Component,
-  Image,
-  PropTypes,
-} from 'react-native';
+var React = require('react');
+var ReactNative = require('react-native');
+var { PropTypes } = React;
+var { Image } = ReactNative;
 
 const propTypes = {
   height: PropTypes.number,
@@ -13,35 +12,32 @@ const propTypes = {
   style: Image.propTypes.style,
 };
 
-class FitImage extends Component {
-  constructor(props) {
-    super(props);
+var FitImage = React.createClass({
+  getInitialState: function() {
+    var size = [this.props.width, this.props.height];
+    var originalSize = [this.props.originalWidth, this.props.originalHeight];
 
-    const size = [props.width, props.height];
-    const originalSize = [props.originalWidth, props.originalHeight];
-
-    if (size.filter(e => e).length === 1) {
+    if (size.filter(function(e) { return e }).length === 1) {
       throw new Error('Props error: size props must be present ' +
                       'none or both of width and height.');
     }
 
-    if (originalSize.filter(e => e).length === 1) {
+    if (originalSize.filter(function(e) { return e }).length === 1) {
       throw new Error('Props error: originalSize props must be present ' +
                       'none or both of originalWidth and originalHeight.');
     }
 
-    this.state = {
+    return {
       height: 0,
       layoutWidth: undefined,
       originalWidth: undefined,
       originalHeight: undefined,
     };
-  }
-
-  componentDidMount() {
+  },
+  componentDidMount: function() {
     if (!this.props.originalWidth || !this.props.originalHeight) {
-      Image.getSize(this.props.source.uri, (width, height) => {
-        const newHeight = this.state.layoutWidth / width;
+      Image.getSize(this.props.source.uri, function(width, height) {
+        var newHeight = this.state.layoutWidth / width;
 
         this.setState({
           height: newHeight,
@@ -50,47 +46,40 @@ class FitImage extends Component {
         });
       });
     }
-  }
-
-  getStyle() {
+  },
+  getStyle: function() {
     if (this.props.width) {
       return { width: this.props.width };
     }
     return { flex: 1 };
-  }
-
-  getOriginalWidth() {
+  },
+  getOriginalWidth: function() {
     return this.props.originalWidth || this.state.originalWidth;
-  }
-
-  getOriginalHeight() {
+  },
+  getOriginalHeight: function() {
     return this.props.originalHeight || this.state.originalHeight;
-  }
-
-  getRatio(width) {
-    const layoutWidth = width || this.state.layoutWidth;
+  },
+  getRatio: function(width) {
+    var layoutWidth = width || this.state.layoutWidth;
 
     return layoutWidth / this.getOriginalWidth();
-  }
-
-  getHeight(layoutWidth) {
+  },
+  getHeight: function(layoutWidth) {
     if (this.props.height) {
       return this.props.height;
     }
     return this.getOriginalHeight() * this.getRatio(layoutWidth);
-  }
-
-  resize(event) {
-    const { width } = event.nativeEvent.layout;
-    const height = this.getHeight(width);
+  },
+  resize: function(event) {
+    var { width } = event.nativeEvent.layout;
+    var height = this.getHeight(width);
 
     this.setState({
       height,
       layoutWidth: width,
     });
-  }
-
-  render() {
+  },
+  render: function() {
     return (
       <Image
         source={this.props.source}
@@ -99,12 +88,12 @@ class FitImage extends Component {
           this.props.style,
           this.getStyle(),
         ]}
-        onLayout={(event) => this.resize(event)}
+        onLayout={this.resize}
       />
     );
   }
-}
+});
 
 FitImage.propTypes = propTypes;
 
-export default FitImage;
+module.exports = FitImage;
