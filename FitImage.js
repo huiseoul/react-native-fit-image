@@ -1,7 +1,9 @@
 import React, {
   Component,
+  PropTypes
+} from 'react';
+import  {
   Image,
-  PropTypes,
 } from 'react-native';
 
 const propTypes = {
