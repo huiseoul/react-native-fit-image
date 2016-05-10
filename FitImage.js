@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
-var { PropTypes } = React;
-var { Image } = ReactNative;
+var PropTypes = React.PropTypes;
+var Image = ReactNative.Image;
 
 const propTypes = {
   height: PropTypes.number,
