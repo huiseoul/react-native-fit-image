@@ -71,7 +71,7 @@ var FitImage = React.createClass({
     return this.getOriginalHeight() * this.getRatio(layoutWidth);
   },
   resize: function(event) {
-    var { width } = event.nativeEvent.layout;
+    var width = event.nativeEvent.layout.width;
     var height = this.getHeight(width);
 
     this.setState({
