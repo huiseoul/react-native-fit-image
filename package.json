@@ -5,7 +5,7 @@
   "main": "dist/FitImage.js",
   "scripts": {
     "build": "babel src -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape -r babel-register -r react-native-mock/mock test/**/*.js | tap-diff"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,14 @@
   "homepage": "https://github.com/huiseoul/react-native-fit-image#readme",
   "devDependencies": {
     "babel-cli": "^6.8.0",
-    "babel-preset-react-native": "^1.7.0"
+    "babel-preset-react-native": "^1.7.0",
+    "enzyme": "^2.3.0",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
+    "react-native": "^0.25.1",
+    "react-native-mock": "^0.2.2",
+    "tap-diff": "^0.1.1",
+    "tape": "^4.5.1"
   },
   "babel": {
     "presets": [
