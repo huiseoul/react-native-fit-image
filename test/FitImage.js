@@ -1,8 +1,5 @@
 import test from 'tape';
 import React from 'react';
-import {
-  Image,
-} from 'react-native';
 import { shallow } from 'enzyme';
 
 import FitImage from '../src/FitImage';
@@ -45,7 +42,7 @@ test('FitImage', nest => {
   nest.test('...render', assert => {
     const { wrapper } = setup();
 
-    assert.true(wrapper.is(Image), 'Image');
+    assert.true(wrapper.is('Image'), 'Image');
 
     assert.end();
   });
