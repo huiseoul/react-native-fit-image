@@ -46,4 +46,4 @@ var styles = StyleSheet.create({
 ![FitImageExample - Portrait](https://github.com/originerd/react-native-fit-image-example/blob/master/fit_image_example_portrait.gif)
 ![FitImageExample - LandScape](https://github.com/originerd/react-native-fit-image-example/blob/master/fit_image_example_landscape.gif)
 
-[1]: https://github.com/huiseoul/react-native-fit-image-example
+[1]: https://github.com/originerd/react-native-fit-image-example
