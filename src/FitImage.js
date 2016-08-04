@@ -13,6 +13,10 @@ const propTypes = {
   originalWidth: PropTypes.number,
   source: PropTypes.object.isRequired,
   style: Image.propTypes.style,
+  children: PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.node),
+    React.PropTypes.node,
+  ]),
 };
 
 class FitImage extends Component {
@@ -102,7 +106,9 @@ class FitImage extends Component {
           this.getStyle(),
         ]}
         onLayout={(event) => this.resize(event)}
-      />
+      >
+        {this.props.children}
+      </Image>
     );
   }
 }
