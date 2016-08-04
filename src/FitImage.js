@@ -107,7 +107,7 @@ class FitImage extends Component {
         ]}
         onLayout={(event) => this.resize(event)}
       >
-        {children}
+        {this.props.children}
       </Image>
     );
   }
