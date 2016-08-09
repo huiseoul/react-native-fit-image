@@ -1,6 +1,6 @@
 {
   "name": "react-native-fit-image",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Responsive image component to fit perfectly itself.",
   "main": "dist/FitImage.js",
   "scripts": {
