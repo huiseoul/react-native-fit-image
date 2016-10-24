@@ -19,7 +19,7 @@ const propTypes = {
   ]),
 };
 
-class FitImage extends Component {
+class FitImage extends Image {
   constructor(props) {
     super(props);
 
