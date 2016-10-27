@@ -1,22 +1,12 @@
-import React, {
-  Component,
-  PropTypes
-} from 'react';
-import  {
-  Image,
-} from 'react-native';
+import React, { PropTypes } from 'react';
+import { Image } from 'react-native';
 
 const propTypes = {
+  ...Image.propTypes,
   height: PropTypes.number,
   width: PropTypes.number,
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
-  source: PropTypes.object.isRequired,
-  style: Image.propTypes.style,
-  children: PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node,
-  ]),
 };
 
 class FitImage extends Image {
@@ -42,6 +32,13 @@ class FitImage extends Image {
       originalWidth: undefined,
       originalHeight: undefined,
     };
+
+    this.getHeight = this.getHeight.bind(this);
+    this.getOriginalHeight = this.getOriginalHeight.bind(this);
+    this.getOriginalWidth = this.getOriginalWidth.bind(this);
+    this.getRatio = this.getRatio.bind(this);
+    this.getStyle = this.getStyle.bind(this);
+    this.resize = this.resize.bind(this);
   }
 
   componentDidMount() {
@@ -58,19 +55,20 @@ class FitImage extends Image {
     }
   }
 
-  getStyle() {
-    if (this.props.width) {
-      return { width: this.props.width };
+  getHeight(layoutWidth) {
+    if (this.props.height) {
+      return this.props.height;
     }
-    return { flex: 1 };
-  }
 
-  getOriginalWidth() {
-    return this.props.originalWidth || this.state.originalWidth;
+    return this.getOriginalHeight() * this.getRatio(layoutWidth);
   }
 
   getOriginalHeight() {
     return this.props.originalHeight || this.state.originalHeight;
+  }
+
+  getOriginalWidth() {
+    return this.props.originalWidth || this.state.originalWidth;
   }
 
   getRatio(width) {
@@ -79,11 +77,11 @@ class FitImage extends Image {
     return layoutWidth / this.getOriginalWidth();
   }
 
-  getHeight(layoutWidth) {
-    if (this.props.height) {
-      return this.props.height;
+  getStyle() {
+    if (this.props.width) {
+      return { width: this.props.width };
     }
-    return this.getOriginalHeight() * this.getRatio(layoutWidth);
+    return { flex: 1 };
   }
 
   resize(event) {
@@ -105,7 +103,7 @@ class FitImage extends Image {
           this.props.style,
           this.getStyle(),
         ]}
-        onLayout={(event) => this.resize(event)}
+        onLayout={this.resize}
       >
         {this.props.children}
       </Image>
