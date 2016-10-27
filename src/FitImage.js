@@ -57,20 +57,16 @@ class FitImage extends Image {
     this.getStyle = this.getStyle.bind(this);
     this.renderChildren = this.renderChildren.bind(this);
     this.resize = this.resize.bind(this);
+    this.setStateSize = this.setStateSize.bind(this);
   }
 
   componentDidMount() {
-    if (!this.props.originalWidth || !this.props.originalHeight) {
-      Image.getSize(this.props.source.uri, (width, height) => {
-        const newHeight = this.state.layoutWidth / width;
+    if (this.props.originalWidth && this.props.originalHeight) return;
+    if (!this.props.source.uri) return;
 
-        this.setState({
-          height: newHeight,
-          originalWidth: width,
-          originalHeight: height,
-        });
-      });
-    }
+    Image.getSize(this.props.source.uri, (originalWidth, originalHeight) => {
+      this.setStateSize(originalWidth, originalHeight);
+    });
   }
 
   getHeight(layoutWidth) {
@@ -109,6 +105,16 @@ class FitImage extends Image {
     this.setState({
       height,
       layoutWidth: width,
+    });
+  }
+
+  setStateSize(originalWidth, originalHeight) {
+    const height = this.state.layoutWidth / originalWidth;
+
+    this.setState({
+      height,
+      originalHeight,
+      originalWidth,
     });
   }
 
