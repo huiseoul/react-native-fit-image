@@ -1,26 +1,42 @@
 import React, { PropTypes } from 'react';
-import { Image } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  StyleSheet,
+} from 'react-native';
 
 const propTypes = {
   ...Image.propTypes,
-  height: PropTypes.number,
-  width: PropTypes.number,
+  indicator: PropTypes.bool,
+  indicatorColor: PropTypes.string,
+  indicatorSize: ActivityIndicator.propTypes.size,
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class FitImage extends Image {
   constructor(props) {
     super(props);
 
-    const size = [props.width, props.height];
-    const originalSize = [props.originalWidth, props.originalHeight];
+    this.style = StyleSheet.flatten(props.style);
 
-    if (size.filter(e => e).length === 1) {
-      throw new Error('Props error: size props must be present ' +
-                      'none or both of width and height.');
+    if (this.style) {
+      const size = [this.style.width, this.style.height];
+
+      if (size.filter(e => e).length === 1) {
+        throw new Error('Props error: size props must be present ' +
+                        'none or both of width and height.');
+      }
     }
 
+    const originalSize = [props.originalWidth, props.originalHeight];
     if (originalSize.filter(e => e).length === 1) {
       throw new Error('Props error: originalSize props must be present ' +
                       'none or both of originalWidth and originalHeight.');
@@ -28,6 +44,7 @@ class FitImage extends Image {
 
     this.state = {
       height: 0,
+      isLoading: false,
       layoutWidth: undefined,
       originalWidth: undefined,
       originalHeight: undefined,
@@ -38,6 +55,7 @@ class FitImage extends Image {
     this.getOriginalWidth = this.getOriginalWidth.bind(this);
     this.getRatio = this.getRatio.bind(this);
     this.getStyle = this.getStyle.bind(this);
+    this.renderChildren = this.renderChildren.bind(this);
     this.resize = this.resize.bind(this);
   }
 
@@ -56,8 +74,8 @@ class FitImage extends Image {
   }
 
   getHeight(layoutWidth) {
-    if (this.props.height) {
-      return this.props.height;
+    if (this.style && this.style.height) {
+      return this.style.height;
     }
 
     return this.getOriginalHeight() * this.getRatio(layoutWidth);
@@ -78,8 +96,8 @@ class FitImage extends Image {
   }
 
   getStyle() {
-    if (this.props.width) {
-      return { width: this.props.width };
+    if (this.style && this.style.width) {
+      return { width: this.style.width };
     }
     return { flex: 1 };
   }
@@ -94,18 +112,34 @@ class FitImage extends Image {
     });
   }
 
+  renderChildren() {
+    if (this.state.isLoading && this.props.indicator) {
+      return (
+        <ActivityIndicator
+          color={this.props.indicatorColor}
+          size={this.props.indicatorSize}
+        />
+      );
+    }
+
+    return this.props.children;
+  }
+
   render() {
     return (
       <Image
         source={this.props.source}
         style={[
-          { height: this.state.height },
-          this.props.style,
+          this.style,
           this.getStyle(),
+          { height: this.state.height },
+          styles.container,
         ]}
         onLayout={this.resize}
+        onLoad={() => { this.setState({ isLoading: false }); }}
+        onLoadStart={() => { this.setState({ isLoading: true }); }}
       >
-        {this.props.children}
+        {this.renderChildren()}
       </Image>
     );
   }
