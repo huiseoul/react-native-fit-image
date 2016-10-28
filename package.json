@@ -1,10 +1,11 @@
 {
   "name": "react-native-fit-image",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Responsive image component to fit perfectly itself.",
   "main": "dist/FitImage.js",
   "scripts": {
     "build": "babel src -d dist",
+    "build-and-publish": "npm run build && npm publish",
     "test": "tape -r babel-register -r react-native-mock/mock test/**/*.js | tap-diff"
   },
   "repository": {
