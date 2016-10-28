@@ -124,7 +124,7 @@ class FitImage extends Image {
   }
 
   renderChildren() {
-    if (this.state.isLoading && this.props.indicator) {
+    if (this.state.isLoading && this.props.indicator !== false) {
       return (
         <ActivityIndicator
           color={this.props.indicatorColor}
