@@ -44,6 +44,12 @@ var styles = StyleSheet.create({
   style={styles.fitImage}
 />
 
+// could use resizeMode
+<FitImage
+  resizeMode="contain"
+  source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
+/>
+
 // or draws image to specific size like Image component.
 <FitImage
   source={{ uri: 'http://facebook.github.io/react/img/logo_og.png' }}
