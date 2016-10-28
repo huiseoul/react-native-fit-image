@@ -9,7 +9,12 @@ const propTypes = {
   ...Image.propTypes,
   indicator: PropTypes.bool,
   indicatorColor: PropTypes.string,
-  indicatorSize: ActivityIndicator.propTypes.size,
+  indicatorSize: PropTypes.oneOfType(
+    [
+      PropTypes.oneOf([ 'small', 'large' ]),
+      PropTypes.number,
+    ]
+  ),
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
 };
@@ -144,6 +149,7 @@ class FitImage extends Image {
         onLayout={this.resize}
         onLoad={() => { this.setState({ isLoading: false }); }}
         onLoadStart={() => { this.setState({ isLoading: true }); }}
+        {...this.props}
       >
         {this.renderChildren()}
       </Image>
