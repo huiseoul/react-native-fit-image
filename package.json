@@ -32,6 +32,7 @@
     "react-dom": "^0.14.8",
     "react-native": "^0.25.1",
     "react-native-mock": "^0.2.2",
+    "sinon": "^1.17.6",
     "tap-diff": "^0.1.1",
     "tape": "^4.5.1"
   },

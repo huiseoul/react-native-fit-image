@@ -1,15 +1,15 @@
 import test from 'tape';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { stub } from 'sinon';
 
 import FitImage from '../src/FitImage';
 
 test('FitImage', nest => {
-  const setup = (props = {}) => {
+  const setup = (passedProps = {}) => {
     const source = { uri: 'http://facebook.github.io/react/img/logo_og.png' };
     const defaultProps = { source };
-
-    props = { ...props, ...defaultProps }
+    const props = { ...passedProps, ...defaultProps };
     const wrapper = shallow(<FitImage {...props} />);
 
     return { wrapper, props };
@@ -17,12 +17,12 @@ test('FitImage', nest => {
 
   nest.test('...throw error on initializing', assert => {
     assert.throws(
-      () => { setup({ width: 100 }); }, Error,
+      () => { setup({ style: { width: 100 } }); }, Error,
       'when width props exist without height'
     );
 
     assert.throws(
-      () => { setup({ height: 100 }); }, Error,
+      () => { setup({ style: { height: 100 } }); }, Error,
       'when height props exist without width'
     );
 
