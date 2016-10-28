@@ -139,6 +139,10 @@ class FitImage extends Image {
   render() {
     return (
       <Image
+        {...this.props}
+        onLayout={this.resize}
+        onLoad={() => { this.setState({ isLoading: false }); }}
+        onLoadStart={() => { this.setState({ isLoading: true }); }}
         source={this.props.source}
         style={[
           this.style,
@@ -146,10 +150,6 @@ class FitImage extends Image {
           { height: this.state.height },
           styles.container,
         ]}
-        onLayout={this.resize}
-        onLoad={() => { this.setState({ isLoading: false }); }}
-        onLoadStart={() => { this.setState({ isLoading: true }); }}
-        {...this.props}
       >
         {this.renderChildren()}
       </Image>
