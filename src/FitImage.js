@@ -9,12 +9,10 @@ const propTypes = {
   ...Image.propTypes,
   indicator: PropTypes.bool,
   indicatorColor: PropTypes.string,
-  indicatorSize: PropTypes.oneOfType(
-    [
-      PropTypes.oneOf([ 'small', 'large' ]),
-      PropTypes.number,
-    ]
-  ),
+  indicatorSize: PropTypes.oneOfType([
+    PropTypes.oneOf(['small', 'large']),
+    PropTypes.number,
+  ]),
   originalHeight: PropTypes.number,
   originalWidth: PropTypes.number,
 };
@@ -47,6 +45,8 @@ class FitImage extends Image {
                       'none or both of originalWidth and originalHeight.');
     }
 
+    this.isFirstLoad = true;
+
     this.state = {
       height: 0,
       isLoading: false,
@@ -60,6 +60,8 @@ class FitImage extends Image {
     this.getOriginalWidth = this.getOriginalWidth.bind(this);
     this.getRatio = this.getRatio.bind(this);
     this.getStyle = this.getStyle.bind(this);
+    this.onLoad = this.onLoad.bind(this);
+    this.onLoadStart = this.onLoadStart.bind(this);
     this.renderChildren = this.renderChildren.bind(this);
     this.resize = this.resize.bind(this);
     this.setStateSize = this.setStateSize.bind(this);
@@ -72,6 +74,17 @@ class FitImage extends Image {
     Image.getSize(this.props.source.uri, (originalWidth, originalHeight) => {
       this.setStateSize(originalWidth, originalHeight);
     });
+  }
+
+  onLoad() {
+    this.setState({ isLoading: false });
+  }
+
+  onLoadStart() {
+    if (this.isFirstLoad) {
+      this.setState({ isLoading: true });
+      this.isFirstLoad = false;
+    }
   }
 
   getHeight(layoutWidth) {
@@ -141,8 +154,8 @@ class FitImage extends Image {
       <Image
         {...this.props}
         onLayout={this.resize}
-        onLoad={() => { this.setState({ isLoading: false }); }}
-        onLoadStart={() => { this.setState({ isLoading: true }); }}
+        onLoad={this.onLoad}
+        onLoadStart={this.onLoadStart}
         source={this.props.source}
         style={[
           this.style,
