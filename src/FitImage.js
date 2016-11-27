@@ -78,6 +78,10 @@ class FitImage extends Image {
 
   onLoad() {
     this.setState({ isLoading: false });
+
+    if(typeof this.props.onLoad === 'function') {
+      this.props.onLoad();
+    }
   }
 
   onLoadStart() {
