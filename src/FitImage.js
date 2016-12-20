@@ -117,7 +117,7 @@ class FitImage extends Image {
     if (this.style && this.style.width) {
       return { width: this.style.width };
     }
-    return { flex: 1 };
+    return { flexGrow: 1 };
   }
 
   resize(event) {
