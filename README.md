@@ -9,6 +9,8 @@ Responsive image component to fit perfectly itself.
 
 ## Usage
 ```javascript
+import FitImage from 'react-native-fit-image';
+
 // custom styles for FitImage
 var styles = StyleSheet.create({
   fitImage: {
