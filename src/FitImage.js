@@ -71,9 +71,19 @@ class FitImage extends Image {
     if (this.props.originalWidth && this.props.originalHeight) return;
     if (!this.props.source.uri) return;
 
+    this.mounted = true;
+
     Image.getSize(this.props.source.uri, (originalWidth, originalHeight) => {
+      if (!this.mounted) {
+        return;
+      }
+
       this.setStateSize(originalWidth, originalHeight);
     });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   onLoad() {
