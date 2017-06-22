@@ -72,14 +72,7 @@ class FitImage extends Image {
     if (!this.props.source.uri) return;
 
     this.mounted = true;
-
-    Image.getSize(this.props.source.uri, (originalWidth, originalHeight) => {
-      if (!this.mounted) {
-        return;
-      }
-
-      this.setStateSize(originalWidth, originalHeight);
-    });
+    this.refreshStateSize();
   }
 
   componentWillUnmount() {
@@ -88,8 +81,9 @@ class FitImage extends Image {
 
   onLoad() {
     this.setState({ isLoading: false });
+    this.refreshStateSize();
 
-    if(typeof this.props.onLoad === 'function') {
+    if (typeof this.props.onLoad === 'function') {
       this.props.onLoad();
     }
   }
@@ -137,6 +131,16 @@ class FitImage extends Image {
     this.setState({
       height,
       layoutWidth: width,
+    });
+  }
+
+  refreshStateSize() {
+    Image.getSize(this.props.source.uri, (originalWidth, originalHeight) => {
+      if (!this.mounted) {
+        return;
+      }
+
+      this.setStateSize(originalWidth, originalHeight);
     });
   }
 
