@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import {
   ActivityIndicator,
+  ImageBackground,
   Image,
   StyleSheet,
 } from 'react-native';
@@ -62,7 +63,7 @@ class FitImage extends Image {
     this.getStyle = this.getStyle.bind(this);
     this.onLoad = this.onLoad.bind(this);
     this.onLoadStart = this.onLoadStart.bind(this);
-    this.renderChildren = this.renderChildren.bind(this);
+    this.renderActivityIndicator = this.renderActivityIndicator.bind(this);
     this.resize = this.resize.bind(this);
     this.setStateSize = this.setStateSize.bind(this);
   }
@@ -154,22 +155,29 @@ class FitImage extends Image {
     });
   }
 
-  renderChildren() {
-    if (this.state.isLoading && this.props.indicator !== false) {
-      return (
-        <ActivityIndicator
-          color={this.props.indicatorColor}
-          size={this.props.indicatorSize}
-        />
-      );
-    }
-
-    return this.props.children;
+  renderActivityIndicator() {
+    return (
+      <ActivityIndicator
+        color={this.props.indicatorColor}
+        size={this.props.indicatorSize}
+      />
+    );
   }
 
   render() {
+    let children = this.props.children;
+    let ImageComponent = Image;
+
+    if (this.state.isLoading && this.props.indicator !== false) {
+      children = this.renderActivityIndicator();
+    }
+
+    if (children) {
+      ImageComponent = ImageBackground;
+    }
+
     return (
-      <Image
+      <ImageComponent
         {...this.props}
         onLayout={this.resize}
         onLoad={this.onLoad}
@@ -182,8 +190,8 @@ class FitImage extends Image {
           styles.container,
         ]}
       >
-        {this.renderChildren()}
-      </Image>
+        {children}
+      </ImageComponent>
     );
   }
 }
