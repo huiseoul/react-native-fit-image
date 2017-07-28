@@ -172,7 +172,7 @@ class FitImage extends Image {
       children = this.renderActivityIndicator();
     }
 
-    if (children) {
+    if (children && ImageBackground) {
       ImageComponent = ImageBackground;
     }
 
