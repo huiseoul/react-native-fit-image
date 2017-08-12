@@ -31,23 +31,37 @@
   "devDependencies": {
     "@types/jest": "^20.0.5",
     "@types/prop-types": "^15.5.1",
-    "@types/react": "16.0.0",
-    "@types/react-native": "0.47.0",
+    "@types/react": "^16.0.2",
+    "@types/react-native": "^0.47.2",
     "@types/react-test-renderer": "^15.5.2",
     "babel-jest": "^20.0.3",
     "babel-preset-react-native": "^2.1.0",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
-    "jest-preset-typescript-react-native": "^1.2.0",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
     "react-native": "0.47.1",
     "react-test-renderer": "16.0.0-alpha.12",
-    "tslint": "^5.5.0",
+    "ts-jest": "^20.0.10",
+    "tslint": "^5.6.0",
     "typescript": "^2.4.2"
   },
   "jest": {
-    "preset": "jest-preset-typescript-react-native",
+    "preset": "react-native",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/typescript"
+    ],
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
     "modulePathIgnorePatterns": [
       "<rootDir>/example/"
     ]
