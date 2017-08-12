@@ -86,14 +86,14 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     if (this.style) {
       const size = [this.style.width, this.style.height];
 
-      if (size.filter((e) => e).length === 1) {
+      if (size.filter(Boolean).length === 1) {
         throw new Error('Props error: size props must be present ' +
                         'none or both of width and height.');
       }
     }
 
     const originalSize = [props.originalWidth, props.originalHeight];
-    if (originalSize.filter((e) => e).length === 1) {
+    if (originalSize.filter(Boolean).length === 1) {
       throw new Error('Props error: originalSize props must be present ' +
                       'none or both of originalWidth and originalHeight.');
     }
