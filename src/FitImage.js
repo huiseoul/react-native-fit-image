@@ -171,7 +171,7 @@ class FitImage extends Image {
     let children = this.props.children;
     let ImageComponent = Image;
 
-    if (this.state.isLoading && this.props.indicator !== false) {
+    if (this.state.isLoading && this.props.indicator === true) {
       children = this.renderActivityIndicator();
     }
 
