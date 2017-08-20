@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FitImage renders without errors 1`] = `
+<Image
+  onLayout={[Function]}
+  onLoad={[Function]}
+  onLoadStart={[Function]}
+  source={
+    Object {
+      "uri": "http://facebook.github.io/react/img/logo_og.png",
+    }
+  }
+  style={
+    Array [
+      undefined,
+      Object {
+        "flexGrow": 1,
+      },
+      Object {
+        "height": 0,
+      },
+      Object {
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+    ]
+  }
+/>
+`;
