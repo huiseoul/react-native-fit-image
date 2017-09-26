@@ -28,6 +28,9 @@
     "url": "https://github.com/huiseoul/react-native-fit-image/issues"
   },
   "homepage": "https://github.com/huiseoul/react-native-fit-image#readme",
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  },
   "devDependencies": {
     "@types/jest": "^20.0.5",
     "@types/prop-types": "^15.5.1",
@@ -38,7 +41,6 @@
     "babel-preset-react-native": "^2.1.0",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
-    "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.12",
     "react-native": "0.47.1",
     "react-test-renderer": "16.0.0-alpha.12",
