@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 export interface IFitImageProps extends ImageProperties {
+  children?: ReactElement<any>;
   /**
    * Whether should display activity indicator or not
    */
@@ -77,6 +78,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   private style: ImageStyle;
   private isFirstLoad: boolean;
   private mounted: boolean;
+  private ImageComponent = ImageBackground || Image;
 
   constructor(props: IFitImageProps) {
     super(props);
@@ -123,15 +125,11 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   public render() {
+    const ImageComponent = this.ImageComponent;
     let children = this.props.children;
-    let ImageComponent = Image;
 
     if (this.state.isLoading && this.props.indicator !== false) {
       children = this.renderActivityIndicator();
-    }
-
-    if (children && ImageBackground) {
-      ImageComponent = ImageBackground;
     }
 
     return (
