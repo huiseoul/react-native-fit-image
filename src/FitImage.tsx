@@ -49,9 +49,6 @@ export interface IFitImageProps extends ImageProperties {
 export interface IFitImageState {
   height: number;
   isLoading: boolean;
-  layoutWidth: number | undefined;
-  originalHeight: number | undefined;
-  originalWidth: number | undefined;
 }
 
 const propTypes = {
@@ -79,6 +76,9 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   private isFirstLoad: boolean;
   private mounted: boolean;
   private ImageComponent = ImageBackground || Image;
+  private originalHeight = 0;
+  private originalWidth = 0;
+  private layoutWidth = 0;
 
   constructor(props: IFitImageProps) {
     super(props);
@@ -105,9 +105,6 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     this.state = {
       height: 0,
       isLoading: false,
-      layoutWidth: undefined,
-      originalHeight: undefined,
-      originalWidth: undefined,
     };
   }
 
@@ -177,11 +174,11 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   private getOriginalHeight = () => (
-    this.props.originalHeight || this.state.originalHeight || 0
+    this.props.originalHeight || this.originalHeight || 0
   )
 
   private getOriginalWidth = () => (
-    this.props.originalWidth || this.state.originalWidth || 0
+    this.props.originalWidth || this.originalWidth || 0
   )
 
   private getRatio = (width: number) => {
@@ -191,7 +188,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
       return 0;
     }
 
-    const layoutWidth = width || this.state.layoutWidth || 0;
+    const layoutWidth = width || this.layoutWidth || 0;
 
     return layoutWidth / this.getOriginalWidth();
   }
@@ -207,9 +204,10 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     const { width } = event.nativeEvent.layout;
     const height = Number(this.getHeight(width));
 
+    this.layoutWidth = width;
+
     this.setState({
       height,
-      layoutWidth: width,
     });
   }
 
@@ -240,12 +238,13 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   private setStateSize = (originalWidth: number, originalHeight: number) => {
-    const height = this.getHeight(this.state.layoutWidth || originalWidth);
+    const height = this.getHeight(this.layoutWidth || originalWidth);
+
+    this.originalHeight = originalHeight;
+    this.originalWidth = originalWidth;
 
     this.setState({
       height,
-      originalHeight,
-      originalWidth,
     });
   }
 
