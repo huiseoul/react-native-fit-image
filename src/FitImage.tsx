@@ -152,8 +152,9 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   private onLoad = () => {
-    this.setState({ isLoading: false });
-    this.refreshStateSize();
+    if (this.state.isLoading) {
+      this.setState({ isLoading: false });
+    }
 
     if (typeof this.props.onLoad === 'function') {
       this.props.onLoad();
@@ -169,7 +170,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
 
   private getHeight = (layoutWidth: number) => {
     if (this.style && this.style.height) {
-      return this.style.height;
+      return Number(this.style.height);
     }
 
     return this.getOriginalHeight() * this.getRatio(layoutWidth);
@@ -239,7 +240,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   private setStateSize = (originalWidth: number, originalHeight: number) => {
-    const height = (this.state.layoutWidth || 0) / originalWidth;
+    const height = this.getHeight(this.state.layoutWidth || originalWidth);
 
     this.setState({
       height,
