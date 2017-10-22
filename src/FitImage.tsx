@@ -237,14 +237,8 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   }
 
   private setStateSize = (originalWidth: number, originalHeight: number) => {
-    const height = this.getHeight(this.layoutWidth || originalWidth);
-
     this.originalHeight = originalHeight;
     this.originalWidth = originalWidth;
-
-    this.setState({
-      height,
-    });
   }
 
   private renderActivityIndicator = () => {
