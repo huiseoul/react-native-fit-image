@@ -123,11 +123,6 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
 
   public render() {
     const ImageComponent = this.ImageComponent;
-    let children = this.props.children;
-
-    if (this.state.isLoading && this.props.indicator !== false) {
-      children = this.renderActivityIndicator();
-    }
 
     return (
       <ImageComponent
@@ -143,9 +138,13 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
           styles.container,
         ]}
       >
-        {children}
+        {this.shouldDisplayIndicator() ? this.renderActivityIndicator() : this.props.children}
       </ImageComponent>
     );
+  }
+
+  private shouldDisplayIndicator = () => {
+    return this.state.isLoading && this.props.indicator !== false;
   }
 
   private onLoad = () => {
