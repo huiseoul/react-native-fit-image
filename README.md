@@ -29,9 +29,9 @@ var styles = StyleSheet.create({
   style={styles.fitImage}
 />
 
-// draws image to fit inherited space automatically and shows indicator while image is loading
+// draws image to fit inherited space automatically and disables loading indicator
 <FitImage
-  indicator
+  indicator={false} // disable loading indicator
   indicatorColor="white" // react native colors or color codes like #919191
   indicatorSize="large" // (small | large) or integer
   source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }}
