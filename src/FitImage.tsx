@@ -47,8 +47,10 @@ export interface IFitImageProps extends ImageProperties {
   originalWidth?: number;
 }
 export interface IFitImageState {
-  height: number;
   isLoading: boolean;
+  layoutWidth: number;
+  originalHeight: number;
+  originalWidth: number;
 }
 
 const propTypes = {
@@ -76,9 +78,6 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   private isFirstLoad: boolean;
   private mounted: boolean;
   private ImageComponent = ImageBackground || Image;
-  private originalHeight = 0;
-  private originalWidth = 0;
-  private layoutWidth = 0;
 
   constructor(props: IFitImageProps) {
     super(props);
@@ -103,18 +102,21 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     this.isFirstLoad = true;
 
     this.state = {
-      height: 0,
       isLoading: false,
+      layoutWidth: 0,
+      originalHeight: 0,
+      originalWidth: 0,
     };
   }
 
   public componentDidMount() {
+    this.mounted = true;
+
     if (this.props.originalWidth && this.props.originalHeight) {
       return;
     }
 
-    this.mounted = true;
-    this.refreshStateSize();
+    this.fetchOriginalSizeFromRemoteImage();
   }
 
   public componentWillUnmount() {
@@ -127,14 +129,14 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     return (
       <ImageComponent
         {...this.props}
-        onLayout={this.resize}
+        onLayout={this.onLayout}
         onLoad={this.onLoad}
         onLoadStart={this.onLoadStart}
         source={this.props.source}
         style={[
           this.style,
           this.getStyle(),
-          { height: this.state.height },
+          { height: this.getHeight() },
           styles.container,
         ]}
       >
@@ -164,53 +166,45 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     }
   }
 
-  private getHeight = (layoutWidth: number) => {
+  private getHeight = () => {
     if (this.style && this.style.height) {
       return Number(this.style.height);
     }
 
-    return this.getOriginalHeight() * this.getRatio(layoutWidth);
+    return Math.round(this.getOriginalHeight() * this.getRatio());
   }
 
   private getOriginalHeight = () => (
-    this.props.originalHeight || this.originalHeight || 0
+    this.props.originalHeight || this.state.originalHeight || 0
   )
 
   private getOriginalWidth = () => (
-    this.props.originalWidth || this.originalWidth || 0
+    this.props.originalWidth || this.state.originalWidth || 0
   )
 
-  private getRatio = (width: number) => {
-    const originalWidth = this.getOriginalWidth();
-
-    if (originalWidth === 0) {
+  private getRatio = () => {
+    if (this.getOriginalWidth() === 0) {
       return 0;
     }
 
-    const layoutWidth = width || this.layoutWidth || 0;
-
-    return layoutWidth / this.getOriginalWidth();
+    return this.state.layoutWidth / this.getOriginalWidth();
   }
 
   private getStyle = () => {
     if (this.style && this.style.width) {
       return { width: this.style.width };
     }
+
     return { flexGrow: 1 };
   }
 
-  private resize = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    const height = Number(this.getHeight(width));
+  private onLayout = (event: LayoutChangeEvent) => {
+    const { width: layoutWidth } = event.nativeEvent.layout;
 
-    this.layoutWidth = width;
-
-    this.setState({
-      height,
-    });
+    this.setState({ layoutWidth });
   }
 
-  private refreshStateSize = () => {
+  private fetchOriginalSizeFromRemoteImage = () => {
     let uri;
 
     if (this.props.source instanceof Array) {
@@ -230,15 +224,17 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
           return;
         }
 
-        this.setStateSize(originalWidth, originalHeight);
+        this.setOriginalSize(originalWidth, originalHeight);
       },
       () => null,
     );
   }
 
-  private setStateSize = (originalWidth: number, originalHeight: number) => {
-    this.originalHeight = originalHeight;
-    this.originalWidth = originalWidth;
+  private setOriginalSize = (originalWidth: number, originalHeight: number) => {
+    this.setState({
+      originalHeight,
+      originalWidth,
+    });
   }
 
   private renderActivityIndicator = () => {
