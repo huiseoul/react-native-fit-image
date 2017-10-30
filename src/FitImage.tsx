@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
 
 class FitImage extends Component<IFitImageProps, IFitImageState> {
   public static propTypes = propTypes;
-  private style: ImageStyle;
+  private ImageComponent = ImageBackground || Image;
   private isFirstLoad: boolean;
   private mounted: boolean;
-  private ImageComponent = ImageBackground || Image;
+  private sizeStyle: ImageStyle;
+  private style: ImageStyle;
 
   constructor(props: IFitImageProps) {
     super(props);
@@ -91,6 +92,12 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
         throw new Error('Props error: size props must be present ' +
                         'none or both of width and height.');
       }
+
+      if (this.style.width) {
+        this.sizeStyle = { width: this.style.width };
+      }
+
+      this.sizeStyle = { flexGrow: 1 };
     }
 
     const originalSize = [props.originalWidth, props.originalHeight];
@@ -135,7 +142,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
         source={this.props.source}
         style={[
           this.style,
-          this.getStyle(),
+          this.sizeStyle,
           { height: this.getHeight() },
           styles.container,
         ]}
@@ -188,14 +195,6 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     }
 
     return this.state.layoutWidth / this.getOriginalWidth();
-  }
-
-  private getStyle = () => {
-    if (this.style && this.style.width) {
-      return { width: this.style.width };
-    }
-
-    return { flexGrow: 1 };
   }
 
   private onLayout = (event: LayoutChangeEvent) => {
