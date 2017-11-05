@@ -1,21 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FitImage renders without errors 1`] = `
-<Image
-  onLayout={[Function]}
-  onLoad={[Function]}
-  onLoadStart={[Function]}
-  source={
-    Object {
-      "uri": "http://facebook.github.io/react/img/logo_og.png",
-    }
-  }
+<View
   style={
     Array [
       undefined,
-      Object {
-        "flexGrow": 1,
-      },
+      undefined,
       Object {
         "height": 0,
       },
@@ -25,5 +15,32 @@ exports[`FitImage renders without errors 1`] = `
       },
     ]
   }
-/>
+>
+  <Image
+    onLayout={[Function]}
+    onLoad={[Function]}
+    onLoadStart={[Function]}
+    source={
+      Object {
+        "uri": "http://facebook.github.io/react/img/logo_og.png",
+      }
+    }
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": undefined,
+          "width": undefined,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
 `;
