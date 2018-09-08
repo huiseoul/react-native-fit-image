@@ -96,8 +96,9 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
       if (this.style.width) {
         this.sizeStyle = { width: this.style.width };
       }
-
-      this.sizeStyle = { flexGrow: 1 };
+      else {
+        this.sizeStyle = { flexGrow: 1 };
+      }
     }
 
     const originalSize = [props.originalWidth, props.originalHeight];
