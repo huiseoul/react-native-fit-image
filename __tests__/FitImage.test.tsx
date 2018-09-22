@@ -7,7 +7,7 @@ import FitImage from '../src/FitImage';
 import { create } from 'react-test-renderer';
 
 describe('FitImage', () => {
-  const source = { uri: 'http://facebook.github.io/react/img/logo_og.png' };
+  const source = { uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png' };
 
   it('renders without errors', () => {
     const result = create(
