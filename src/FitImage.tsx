@@ -5,13 +5,13 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
-  ImageProperties,
+  ImageProps,
   ImageStyle,
   LayoutChangeEvent,
   StyleSheet,
 } from 'react-native';
 
-export interface IFitImageProps extends ImageProperties {
+export interface IFitImageProps extends ImageProps {
   children?: ReactElement<any>;
   /**
    * Whether should display activity indicator or not
