@@ -140,6 +140,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
         onLayout={this.onLayout}
         onLoad={this.onLoad}
         onLoadStart={this.onLoadStart}
+        onError={this.onError}
         source={this.props.source}
         style={[
           this.style,
@@ -171,6 +172,12 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     if (this.isFirstLoad) {
       this.setState({ isLoading: true });
       this.isFirstLoad = false;
+    }
+  }
+
+  private onError = () => {
+    if (this.state.isLoading) {
+      this.setState({ isLoading: false });
     }
   }
 
