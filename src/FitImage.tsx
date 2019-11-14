@@ -45,6 +45,8 @@ export interface IFitImageProps extends ImageProps {
    * Then it will be used instead of fetching the size information remotely.
    */
   originalWidth?: number;
+
+  style?: ImageStyle;
 }
 export interface IFitImageState {
   isLoading: boolean;
@@ -76,8 +78,8 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
   public static propTypes = propTypes;
   private ImageComponent = ImageBackground || Image;
   private isFirstLoad: boolean;
-  private mounted: boolean;
-  private sizeStyle: ImageStyle;
+  private mounted: boolean = false;
+  private sizeStyle: ImageStyle = {};
   private style: ImageStyle;
 
   constructor(props: IFitImageProps) {
@@ -95,8 +97,7 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
 
       if (this.style.width) {
         this.sizeStyle = { width: this.style.width };
-      }
-      else {
+      } else {
         this.sizeStyle = { flexGrow: 1 };
       }
     }
