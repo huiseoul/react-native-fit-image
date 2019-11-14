@@ -5,13 +5,13 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
-  ImageProps,
+  ImageProperties,
   ImageStyle,
   LayoutChangeEvent,
   StyleSheet,
 } from 'react-native';
 
-export interface IFitImageProps extends ImageProps {
+export interface IFitImageProps extends ImageProperties {
   children?: ReactElement<any>;
   /**
    * Whether should display activity indicator or not
@@ -45,9 +45,8 @@ export interface IFitImageProps extends ImageProps {
    * Then it will be used instead of fetching the size information remotely.
    */
   originalWidth?: number;
-
-  style?: ImageStyle;
 }
+
 export interface IFitImageState {
   isLoading: boolean;
   layoutWidth: number;
