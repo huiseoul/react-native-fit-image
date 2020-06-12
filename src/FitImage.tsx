@@ -179,6 +179,10 @@ class FitImage extends Component<IFitImageProps, IFitImageState> {
     if (this.state.isLoading) {
       this.setState({ isLoading: false });
     }
+
+    if (typeof this.props.onError === 'function') {
+      this.props.onError();
+    }
   }
 
   private getHeight = () => {
